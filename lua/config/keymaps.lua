@@ -5,7 +5,7 @@
 --NeoTree Toggle
 vim.keymap.set("n", "<C-n>", "<cmd>Neotree toggle<CR>")
 --Changing the Insert mode ->  Normal mode
-vim.keymap.set("i", "jj", "<Esc>")
+vim.keymap.set("i", "jj", "<Esc>:w<CR>")
 
 vim.keymap.set("n", "<leader><F5>", vim.cmd.UndotreeToggle)
 vim.keymap.set("n", "<leader><Tab><Tab>", "<cmd>tabnew<CR>")
