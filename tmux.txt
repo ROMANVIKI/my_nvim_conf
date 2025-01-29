@@ -1,0 +1,72 @@
+set -g default-terminal "tmux-256color"
+
+set-option -g status-position top
+set -g mouse on
+
+# Key Bindings
+unbind C-b
+set-option -g prefix C-s
+bind-key h select-pane -L
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind-key l select-pane -R
+
+# Plugin Manager
+set -g @plugin 'tmux-plugins/tpm'
+
+# Plugin Manager
+set -g @plugin 'Nybkox/tmux-kanagawa'
+set -g @kanagawa-theme 'kanagawa'
+
+
+set -g @kanagawa-plugins "git battery time"
+
+# Battery Colors
+set -g @kanagawa-battery-colors "dark_gray cyan"
+
+# Git Colors
+set -g @kanagawa-git-colors "light_purple white"
+
+# Time Colors
+set -g @kanagawa-time-colors "dark_purple blue"
+
+
+# available colors: white, gray, dark_gray, light_purple, dark_purple, cyan, green, orange, red, pink, yellow
+# set -g @kanagawa-[plugin-name]-colors "[background] [foreground]"
+# Kanagawa Theme Configuration 
+set -g @kanagawa-ignore-window-colors true
+
+set -g @kanagawa-show-powerline true
+
+set -g @kanagawa-show-flags true
+
+#default is unicode no message
+set -g @kanagawa-hg-no-repo-message ""
+# Additional Configurations for Date, Weather, and Git
+set -g status-left-length 100
+set -g status-right-length 100
+set -g status-interval 5
+
+# Aesthetic Powerline Style
+set -g status-style "bg=colour235,fg=colour136"
+set -g status-left "#[fg=colour231,bg=colour240]  #[fg=colour255,bg=colour240] Session: #S #[fg=colour240,bg=colour235]"
+set -g status-right "#[fg=colour235,bg=colour240]#[fg=colour255,bg=colour240] #{weather} #[fg=colour240,bg=colour235]#[fg=colour231,bg=colour235] #{date} #[fg=colour240,bg=colour235]#[fg=colour136] #{git_status}"
+
+# Date Configuration
+set -g @kanagawa-date-format "%a %b %d %H:%M:%S"
+set -g @kanagawa-date-label "DATE"
+
+# Git Status Integration (requires tmux-git plugin or custom script)
+set -g @kanagawa-git-status-label "GIT"
+
+# Weather Configuration (requires an external script or API integration)
+# Example Weather Script Integration:
+set -g @kanagawa-weather-command "curl -s 'wttr.in/?format=1'"
+set -g @kanagawa-weather-label "WEATHER"
+
+# Enable Tmux Plugin Manager (TPM)
+run '~/.tmux/plugins/tpm/tpm'
+
+
+bind r source-file ~/.tmux.conf \; display-message "tmux.conf reloaded"
+
