@@ -1,28 +1,38 @@
--- init.lua:
---     {
---     'nvim-telescope/telescope.nvim', tag = '0.1.8',
--- -- or                              , branch = '0.1.x',
---       dependencies = { 'nvim-lua/plenary.nvim' }
---     }
-
-require("telescope").setup({
-  defaults = {
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--word", -- Add this to match whole words only
-    },
-  },
-})
-
--- plugins/telescope.lua:
 return {
-  "nvim-telescope/telescope.nvim",
-  tag = "0.1.8",
-  -- or                              , branch = '0.1.x',
-  dependencies = { "nvim-lua/plenary.nvim" },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required dependency for telescope
+      "nvim-telescope/telescope-fzf-native.nvim", -- Optional: for better performance
+      build = "make",
+    },
+    config = function()
+      -- Basic Telescope setup
+      require("telescope").setup({
+        defaults = {
+          mappings = {
+            i = {
+              -- Map Esc to close the Telescope window
+              ["<Esc>"] = require("telescope.actions").close,
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            theme = "dropdown", -- Use a dropdown theme for the find_files picker
+          },
+        },
+      })
+
+      -- Load optional plugins like fzf-native for better performance
+      pcall(require("telescope").load_extension, "fzf")
+
+      -- Keybindings for Telescope
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
+      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+    end,
+  },
 }

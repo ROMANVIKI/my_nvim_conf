@@ -30,7 +30,6 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "rose-pine", "kanagawa" } }, -- Add both themes for easy switching
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -116,93 +115,6 @@ require("kanagawa").setup({
     light = "dragon",
   },
 })
-
--- vim.cmd("colorscheme kanagawa")
---
-require("rose-pine").setup({
-  variant = "auto", -- Options: auto, main, moon, dawn
-  dark_variant = "main", -- Options: main, moon, dawn
-  dim_inactive_windows = false,
-  extend_background_behind_borders = true,
-
-  enable = {
-    terminal = true,
-    legacy_highlights = true, -- Improve compatibility with older Neovim versions
-    migrations = true, -- Automatically handle deprecated options
-  },
-
-  styles = {
-    bold = true,
-    italic = true,
-    transparency = false,
-  },
-
-  groups = {
-    border = "muted",
-    link = "iris",
-    panel = "surface",
-
-    -- Diagnostics
-    error = "love",
-    hint = "iris",
-    info = "foam",
-    note = "pine",
-    todo = "rose",
-    warn = "gold",
-
-    -- Git-related
-    git_add = "foam",
-    git_change = "rose",
-    git_delete = "love",
-    git_dirty = "rose",
-    git_ignore = "muted",
-    git_merge = "iris",
-    git_rename = "pine",
-    git_stage = "iris",
-    git_text = "rose",
-    git_untracked = "subtle",
-
-    -- Headings
-    h1 = "iris",
-    h2 = "foam",
-    h3 = "rose",
-    h4 = "gold",
-    h5 = "pine",
-    h6 = "foam",
-  },
-
-  palette = {
-    -- Custom palette per variant
-    -- moon = {
-    --     base = '#18191a',
-    --     overlay = '#363738',
-    -- },
-  },
-
-  highlight_groups = {
-    -- Example overrides
-    -- Comment = { fg = "foam" },
-    -- VertSplit = { fg = "muted", bg = "muted" },
-  },
-
-  before_highlight = function(group, highlight, palette)
-    -- Example: Disable all undercurls
-    -- if highlight.undercurl then
-    --     highlight.undercurl = false
-    -- end
-
-    -- Example: Modify specific highlight colors
-    -- if highlight.fg == palette.pine then
-    --     highlight.fg = palette.foam
-    -- end
-  end,
-})
---
--- vim.cmd("colorscheme rose-pine") -- Default colorscheme
--- Uncomment the one you prefer
--- vim.cmd("colorscheme rose-pine-main")
--- vim.cmd("colorscheme rose-pine-moon")
--- vim.cmd("colorscheme rose-pine-dawn")
 
 require("catppuccin").setup({
   flavour = "mocha", -- Using the darkest variant
@@ -319,78 +231,16 @@ require("catppuccin").setup({
   },
 })
 
--- Bufferline configuration optimized for dark theme
-require("bufferline").setup({
-  options = {
-    mode = "buffers",
-    style_preset = require("bufferline").style_preset.minimal,
-    themable = true,
-    separator_style = "slant",
-    show_buffer_close_icons = true,
-    show_close_icon = true,
-    color_icons = true,
-    diagnostics = "nvim_lsp",
-    diagnostics_update_in_insert = false,
-    diagnostics_indicator = function(count, level)
-      local icon = level:match("error") and " " or " "
-      return " " .. icon .. count
-    end,
-    offsets = {
-      {
-        filetype = "NvimTree",
-        text = "Files",
-        highlight = "Directory",
-        separator = true,
-      },
-    },
-    hover = {
-      enabled = true,
-      delay = 50,
-      reveal = { "close" },
-    },
-  },
-  highlights = require("catppuccin.groups.integrations.bufferline").get({
-    styles = { "bold" },
-    custom = {
-      all = {
-        fill = { bg = "#080810" },
-        background = { fg = "#666666", bg = "#0a0a12" },
-        separator = { fg = "#080810" },
-        separator_selected = { fg = "#080810" },
-        close_button = { fg = "#666666" },
-        close_button_selected = { fg = "#d9d9d9" },
-        buffer_selected = {
-          fg = "#d9d9d9",
-          bg = "#0c0c14",
-          bold = true,
-        },
-        diagnostic = { fg = "#666666" },
-        diagnostic_selected = { fg = "#d9d9d9", bold = true },
-        info = { fg = "#89b4fa" },
-        info_selected = { fg = "#89b4fa", bold = true },
-        warning = { fg = "#f9e2af" },
-        warning_selected = { fg = "#f9e2af", bold = true },
-        error = { fg = "#f38ba8" },
-        error_selected = { fg = "#f38ba8", bold = true },
-        modified = { fg = "#89b4fa" },
-        modified_selected = { fg = "#89b4fa", bold = true },
-        duplicate = { fg = "#666666" },
-        duplicate_selected = { fg = "#d9d9d9" },
-      },
-    },
-  }),
-})
-
--- Additional vim options for dark theme optimization
+-- Additional comfort settings
 vim.opt.termguicolors = true
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.cursorline = true
+vim.opt.synmaxcol = 240 -- Prevent slow rendering on long lines
+vim.opt.laststatus = 2
+vim.opt.cmdheight = 1
 
 -- Set colorscheme
 -- vim.cmd.colorscheme("catppuccin")
 -- vim.cmd.colorscheme("kanagawa")
 -- vim.cmd.colorscheme("rose-pine-moon")
-vim.cmd.colorscheme("rose-pine-main")
--- vim.cmd.colorscheme("tokyonight")
+-- vim.cmd.colorscheme("rose-pine-main")
+vim.cmd.colorscheme("tokyonight")
+-- vim.cmd.colorscheme("gruvbox")
