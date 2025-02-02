@@ -19,8 +19,12 @@ return {
         },
         pickers = {
           find_files = {
-            theme = "dropdown", -- Use a dropdown theme for the find_files picker
+            -- theme = "dropdown", -- Use a dropdown theme for the find_files picker
+            theme = "ivy",
           },
+        },
+        extensions = {
+          fzf = {},
         },
       })
 

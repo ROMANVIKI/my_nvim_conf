@@ -30,6 +30,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -51,62 +52,63 @@ require("lazy").setup({
   },
 })
 
--- Kanagawa Configuration (commented out for now)
 require("kanagawa").setup({
   compile = false,
   undercurl = true,
-  commentStyle = { italic = false },
-  functionStyle = { bold = true },
-  keywordStyle = { bold = true },
+  commentStyle = { italic = false }, -- Primeagen typically prefers no italics
+  functionStyle = { bold = true }, -- Bold functions for better readability
+  keywordStyle = { bold = true }, -- Bold keywords
   statementStyle = { bold = true },
-  typeStyle = { bold = true },
+  typeStyle = { bold = true }, -- Bold types
   transparent = false,
   dimInactive = true,
   terminalColors = true,
   colors = {
     palette = {
-      sumiInk0 = "#16161D",
-      sumiInk1 = "#181820",
-      sumiInk2 = "#1A1A22",
-      oldWhite = "#C8C093",
-      fujiWhite = "#DCD7BA",
-      oniViolet = "#957FB8",
-      crystalBlue = "#7E9CD8",
-      springGreen = "#98BB6C",
-      carpYellow = "#E6C384",
-      autumnRed = "#C34043",
+      -- More muted, darker colors typical of Primeagen's setups
+      sumiInk0 = "#16161D", -- Darker background
+      sumiInk1 = "#181820", -- Slightly lighter dark
+      sumiInk2 = "#1A1A22", -- For UI elements
+      oldWhite = "#C8C093", -- Main text color
+      fujiWhite = "#DCD7BA", -- Brighter text
+      oniViolet = "#957FB8", -- Purple accents
+      crystalBlue = "#7E9CD8", -- Blue accents
+      springGreen = "#98BB6C", -- Green for strings
+      carpYellow = "#E6C384", -- Yellow for functions
+      autumnRed = "#C34043", -- Error red
     },
     theme = {
       dragon = {
         ui = {
-          bg = "#16161D",
-          bg_gutter = "#1A1A22",
-          fg = "#C8C093",
+          bg = "#16161D", -- Darker background
+          bg_gutter = "#1A1A22", -- Slightly lighter for contrast
+          fg = "#C8C093", -- Main text color
         },
         syntax = {
-          keyword = "#957FB8",
-          func = "#E6C384",
-          string = "#98BB6C",
-          comment = "#565656",
+          keyword = "#957FB8", -- Purple for keywords
+          func = "#E6C384", -- Yellow for functions
+          string = "#98BB6C", -- Green for strings
+          comment = "#565656", -- Dark gray for comments
         },
       },
     },
   },
   overrides = function(colors)
     return {
+      -- Primeagen-style highlighting
       Normal = { bg = colors.theme.ui.bg, fg = colors.theme.ui.fg },
       Comment = { fg = colors.theme.syntax.comment, italic = false },
       Function = { fg = colors.theme.syntax.func, bold = true },
       Keyword = { fg = colors.theme.syntax.keyword, bold = true },
       String = { fg = colors.theme.syntax.string },
       CursorLine = { bg = colors.theme.ui.bg_gutter },
-      LineNr = { fg = "#565656" },
-      Visual = { bg = "#2D2D3A" },
-      Search = { bg = "#3D3D4A", fg = "#E6C384" },
+      LineNr = { fg = "#565656" }, -- Muted line numbers
+      Visual = { bg = "#2D2D3A" }, -- Subtle selection
+      Search = { bg = "#3D3D4A", fg = "#E6C384" }, -- Clear search highlighting
       Error = { fg = colors.palette.autumnRed, bold = true },
-      StatusLine = { bg = "#1A1A22", fg = "#C8C093" },
-      TabLine = { bg = "#1A1A22", fg = "#565656" },
-      TabLineSel = { bg = "#2D2D3A", fg = "#C8C093" },
+      StatusLine = { bg = "#1A1A22", fg = "#C8C093" }, -- Clean status line
+      TabLine = { bg = "#1A1A22", fg = "#565656" }, -- Muted tabs
+      TabLineSel = { bg = "#2D2D3A", fg = "#C8C093" }, -- Selected tab
     }
   end,
   theme = "dragon",
@@ -116,131 +118,4 @@ require("kanagawa").setup({
   },
 })
 
-require("catppuccin").setup({
-  flavour = "mocha", -- Using the darkest variant
-  background = {
-    light = "mocha",
-    dark = "mocha",
-  },
-  transparent_background = false,
-  show_end_of_buffer = false,
-  term_colors = true,
-  dim_inactive = {
-    enabled = true,
-    shade = "dark",
-    percentage = 0.25,
-  },
-  no_italic = true, -- Disabled italics for cleaner look
-  no_bold = false,
-  no_underline = false,
-  styles = {
-    comments = {},
-    conditionals = {},
-    loops = {},
-    functions = { "bold" },
-    keywords = { "bold" },
-    strings = {},
-    variables = {},
-    numbers = {},
-    booleans = {},
-    properties = {},
-    types = { "bold" },
-    operators = {},
-  },
-  color_overrides = {
-    mocha = {
-      base = "#0c0c14", -- Deeper background
-      mantle = "#0a0a12", -- Darker mantle
-      crust = "#080810", -- Darkest shade for contrast
-
-      -- Softer text colors for better readability in dark theme
-      text = "#d9d9d9", -- Slightly off-white
-      subtext1 = "#b9b9b9",
-      subtext0 = "#999999",
-
-      -- Syntax colors - deep but visible
-      blue = "#89b4fa",
-      lavender = "#b4befe",
-      sapphire = "#74c7ec",
-      sky = "#89dceb",
-      teal = "#94e2d5",
-      green = "#a6e3a1",
-      yellow = "#f9e2af",
-      peach = "#fab387",
-      maroon = "#eba0ac",
-      red = "#f38ba8",
-      mauve = "#cba6f7",
-      pink = "#f5c2e7",
-      flamingo = "#f2cdcd",
-      rosewater = "#f5e0dc",
-    },
-  },
-  highlight_overrides = {
-    mocha = function(c)
-      return {
-        -- Basic editor colors
-        Normal = { fg = c.text, bg = c.base },
-        NormalFloat = { fg = c.text, bg = c.base },
-        LineNr = { fg = c.overlay0 },
-        CursorLine = { bg = c.mantle },
-        CursorLineNr = { fg = c.mauve, bold = true },
-        Visual = { bg = "#1a1926" },
-
-        -- Menus and selections
-        Pmenu = { fg = c.text, bg = c.mantle },
-        PmenuSel = { fg = c.text, bg = "#2a2a3a" },
-
-        -- Enhanced git colors
-        GitSignsAdd = { fg = c.green },
-        GitSignsChange = { fg = c.yellow },
-        GitSignsDelete = { fg = c.red },
-
-        -- Diagnostics with better visibility
-        DiagnosticError = { fg = c.red },
-        DiagnosticWarn = { fg = c.yellow },
-        DiagnosticInfo = { fg = c.blue },
-        DiagnosticHint = { fg = c.teal },
-      }
-    end,
-  },
-  integrations = {
-    cmp = true,
-    gitsigns = true,
-    nvimtree = true,
-    treesitter = true,
-    notify = true,
-    mini = {
-      enabled = true,
-      indentscope_color = "",
-    },
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = {},
-        hints = {},
-        warnings = {},
-        information = {},
-      },
-      underlines = {
-        errors = { "underline" },
-        hints = { "underline" },
-        warnings = { "underline" },
-        information = { "underline" },
-      },
-    },
-  },
-})
-
--- Additional comfort settings
-vim.opt.termguicolors = true
-vim.opt.synmaxcol = 240 -- Prevent slow rendering on long lines
-vim.opt.laststatus = 2
-vim.opt.cmdheight = 1
-
--- Set colorscheme
--- vim.cmd.colorscheme("catppuccin")
--- vim.cmd.colorscheme("kanagawa")
--- vim.cmd.colorscheme("rose-pine-moon")
--- vim.cmd.colorscheme("rose-pine-main")
-vim.cmd.colorscheme("tokyonight")
--- vim.cmd.colorscheme("gruvbox")
+vim.cmd("colorscheme kanagawa")
