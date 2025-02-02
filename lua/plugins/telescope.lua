@@ -42,10 +42,6 @@ return {
           cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
         })
       end)
-
-      vim.keymap.set("n", "<leader>mg", function()
-        require("plugins.multigrep").live_multigrep()
-      end, { desc = "Multi Grep" })
     end,
   },
 }
