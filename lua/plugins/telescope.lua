@@ -37,6 +37,15 @@ return {
       vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
       vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+      vim.keymap.set("n", "<space>ep", function()
+        require("telescope.builtin").find_files({
+          cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
+        })
+      end)
+
+      vim.keymap.set("n", "<leader>mg", function()
+        require("plugins.multigrep").live_multigrep()
+      end, { desc = "Multi Grep" })
     end,
   },
 }
