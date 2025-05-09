@@ -1,0 +1,230 @@
+# Set mod key
+set $mod Mod4
+font pango:FiraCode Nerd Font 8
+
+# Use pixel borders
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
+
+# Left-handed mouse
+exec_always --no-startup-id xmodmap -e "pointer = 3 2 1"
+
+# Force all windows to float like in XFCE or Windows
+# for_window [class=".*"] move position 0 0, resize set 100 ppt 100 ppt
+# for_window [class=".*"] floating enable, move position 0 0, resize set 100 ppt 100 ppt
+# for_window [class=".*"] floating enable, move position center, resize set 95 ppt 95 ppt
+# for_window [class=".*"] floating enable, move position 0 2ppt, resize set 100 ppt 96 ppt
+# for_window [class=".*"] floating enable, move position 0 25px, resize set 100 ppt 95 ppt
+for_window [class=".*"] floating enable, move position 0 30px, resize set 100 ppt 96 ppt
+
+
+
+
+
+
+
+# Enable focus wrapping (looping)
+force_focus_wrapping yes
+focus_follows_mouse yes
+mouse_warping none
+
+# Startup applications
+exec --no-startup-id nm-applet
+exec --no-startup-id cbatticon
+exec --no-startup-id picom -b
+exec --no-startup-id feh --bg-fill ~/Pictures/redbull-racing.jpeg
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id dex --autostart --environment i3
+
+
+# Terminal, file manager, browser
+bindsym Control+Mod1+t exec alacritty 
+bindsym Control+Mod1+f exec --no-startup-id yazi
+bindsym Mod1+z exec firefox
+bindsym Control+Shift+k exec --no-startup-id ~/kill-servers.sh
+
+# Window controls
+bindsym Mod1+F4 kill
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+
+# Show desktop by moving to an empty workspace (e.g., 10)
+
+
+bindsym Print exec flameshot gui
+
+# Alt+Tab
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+# bindsym Mod1+Tab exec --no-startup-id ~/.config/i3/scripts/i3-cycle-focus.py --switch
+# bindsym Mod1+Shift+Tab exec --no-startup-id ~/.config/i3/scripts/i3-cycle-focus.py --switch
+
+exec_always --no-startup-id ~/.config/i3/scripts/i3-cycle-focus.py --history 10
+
+
+
+# Windows-like Alt+Tab behavior
+
+
+# Workspace switching
+bindsym Control+Mod1+Right workspace next
+bindsym Control+Mod1+Left workspace prev
+
+# Window placement (simulate Windows snapping)
+bindsym $mod+Up move position center 0; resize set 100ppt 50ppt
+bindsym $mod+Down move position center 50ppt; resize set 100ppt 50ppt
+bindsym $mod+Left move position 0 center; resize set 50ppt 100ppt
+bindsym $mod+Right move position 50ppt center; resize set 50ppt 100ppt
+bindsym $mod+m move position center center; resize set 80ppt 80ppt
+
+# Toggle floating & focus mode
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# App-specific floating (redundant, but safe)
+for_window [class="Yazi"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Thunar"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [title="Preferences$"] floating enable
+for_window [class="Lxappearance"] floating enable
+
+# Volume control
+
+
+
+# Volume up
+bindsym Mod1+F3 exec --no-startup-id pamixer -i 5
+
+# Volume down
+bindsym Mod1+F2 exec --no-startup-id pamixer -d 5
+
+# Mute toggle
+bindsym Mod1+F1 exec --no-startup-id pamixer -t
+
+
+
+# Brightness control
+# bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
+
+bindsym Mod1+F9 exec --no-startup-id brightnessctl set 10%-
+bindsym Mod1+F10 exec --no-startup-id brightnessctl set +10%
+
+
+
+# Exit
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3 session?' -B 'Yes' 'i3-msg exit'"
+
+# Resize mode
+mode "resize" {
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Workspace setup
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move window to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Reload / restart
+bindsym Control+Mod1+r reload
+bindsym $mod+Shift+r restart
+
+# Borders and titlebars - XFCE-like
+new_window pixel 1
+new_float pixel 1
+title_align center
+
+# client.focused          #5294e2 #5294e2 #ffffff #5294e2 #5294e2
+# client.focused_inactive #383c4a #383c4a #d3dae3 #383c4a #383c4a
+# client.unfocused        #2b2e39 #2b2e39 #7c818c #2b2e39 #2b2e39
+# client.urgent           #e14245 #e14245 #ffffff #e14245 #e14245
+# client.placeholder      #2b2e39 #2b2e39 #d3dae3 #2b2e39 #2b2e39
+# client.background       #1e1e2e
+
+
+
+
+# Borders and titlebars
+client.focused          #1e1e2e #1e1e2e #ffffff #5294e2 #5294e2
+client.focused_inactive #2b2e39 #2b2e39 #bbbbbb #2b2e39 #2b2e39
+client.unfocused        #1e1e2e #1e1e2e #888888 #1e1e2e #1e1e2e
+client.urgent           #ff5555 #ff5555 #ffffff #ff5555 #ff5555
+client.placeholder      #2b2e39 #2b2e39 #ffffff #2b2e39 #2b2e39
+client.background       #1e1e2e
+
+# Bar config
+bar {
+    status_command i3blocks
+    font pango:FiraCode Nerd Font 8
+    position top
+    height 22
+    tray_output primary
+    tray_padding 0
+
+    colors {
+        background #2b2e39
+        statusline #d3dae3
+        separator  #5294e2
+
+        focused_workspace  #5294e2 #5294e2 #ffffff
+        active_workspace   #383c4a #383c4a #d3dae3
+        inactive_workspace #2b2e39 #2b2e39 #7c818c
+        urgent_workspace   #e14245 #e14245 #ffffff
+        binding_mode       #4ec2e8 #4ec2e8 #ffffff
+    }
+}
+

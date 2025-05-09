@@ -1,0 +1,183 @@
+# i3 Config - Left-handed XFCE-like Setup
+# Basic Settings
+set $mod Mod4
+font pango:FiraCode Nerd Font 8  # Smaller font for more compact appearance
+
+# Remove title bars but keep a small border for visibility
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
+
+# Mouse settings for left-handed user - swap left and right click
+# This swaps buttons 1 (left) and 3 (right) for all mice
+exec_always --no-startup-id xmodmap -e "pointer = 3 2 1"
+
+# XFCE-like window behavior - prevent windows from sharing space
+workspace_layout default
+# Disable automatic tiling to mimic XFCE behavior
+# default_orientation horizontal
+
+# Launch on startup
+exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id cbatticon
+exec --no-startup-id picom -b  # Compositor for smooth transitions
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper.jpg  # Set wallpaper
+
+# Set default terminal and browser
+bindsym Control+Mod1+t exec kitty
+bindsym Control+Mod1+f exec --no-startup-id yazi
+bindsym Mod1+b exec firefox
+
+# Window controls
+bindsym Mod1+F4 kill
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Alt+Tab window cycling - XFCE-like behavior
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+# Workspace navigation
+bindsym Control+Mod1+Right workspace next
+bindsym Control+Mod1+Left workspace prev
+
+# XFCE-like window placement shortcuts
+bindsym $mod+Up move position center 0; resize set 100ppt 50ppt          # Top half
+bindsym $mod+Down move position center 50ppt; resize set 100ppt 50ppt    # Bottom half
+bindsym $mod+Left move position 0 center; resize set 50ppt 100ppt        # Left half
+bindsym $mod+Right move position 50ppt center; resize set 50ppt 100ppt   # Right half
+bindsym $mod+m move position center center; resize set 80ppt 80ppt       # Middle
+
+# Split orientation controls
+bindsym $mod+v split v  # Split vertically
+bindsym $mod+b split h  # Split horizontally
+# Don't auto-split when adding new windows - more like XFCE
+bindsym $mod+n split none; exec notify-send "Split mode disabled"
+
+# Floating control - essential for XFCE-like behavior
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle  # Toggle focus between floating/tiling
+
+# App-specific floating windows
+for_window [class="Yazi"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Thunar"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [title="Preferences$"] floating enable
+for_window [class="Lxappearance"] floating enable
+
+# Volume controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+10 i3blocks
+
+# Brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
+# Exit i3 session
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3 session?' -B 'Yes' 'i3-msg exit'"
+
+# Resize mode
+mode "resize" {
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Workspace definitions (1-10)
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Workspace keybindings
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Layout controls
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+a focus parent
+
+# Reload and restart i3
+bindsym Control+Mod1+r reload
+bindsym $mod+Shift+r restart
+
+# Window border colors - XFCE-inspired theme
+client.focused          #5294e2 #5294e2 #ffffff #5294e2 #5294e2
+client.focused_inactive #383c4a #383c4a #d3dae3 #383c4a #383c4a
+client.unfocused        #2b2e39 #2b2e39 #7c818c #2b2e39 #2b2e39
+client.urgent           #e14245 #e14245 #ffffff #e14245 #e14245
+client.placeholder      #2b2e39 #2b2e39 #d3dae3 #2b2e39 #2b2e39
+client.background       #ffffff
+
+# Enhanced i3bar with i3blocks - compact design with time display
+bar {
+    status_command i3blocks
+    font pango:FiraCode Nerd Font 8
+    position top
+    height 20
+    tray_output primary
+    tray_padding 0
+    
+    colors {
+        background #2b2e39
+        statusline #d3dae3
+        separator  #5294e2
+        
+        focused_workspace  #5294e2 #5294e2 #ffffff
+        active_workspace   #383c4a #383c4a #d3dae3
+        inactive_workspace #2b2e39 #2b2e39 #7c818c
+        urgent_workspace   #e14245 #e14245 #ffffff
+        binding_mode       #4ec2e8 #4ec2e8 #ffffff
+    }
+}
+
