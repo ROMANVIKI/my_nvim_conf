@@ -13,7 +13,9 @@ vim.keymap.set("n", "<leader><F5>", vim.cmd.UndotreeToggle)
 vim.keymap.set("n", "<leader><Tab><Tab>", "<cmd>tabnew<CR>")
 vim.keymap.set("n", "<Tab>", "<cmd>tabnext<CR>")
 vim.keymap.set("n", "Q", "<cmd>tabclose<CR>")
-vim.keymap.set("n", "<C-t>", "<cmd>terminal<CR>")
+vim.keymap.set("n", "<leader>d", "<cmd>1,$d<CR>")
+vim.keymap.set("n", "<leader>y", "<cmd>1,$y +<CR>")
+
 -- Move the current line up
 vim.api.nvim_set_keymap("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
 -- Move the current line down

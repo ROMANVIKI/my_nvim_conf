@@ -28,18 +28,4 @@ return {
       },
     },
   },
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    dependencies = {
-      "mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
-  },
-  {
-    "williamboman/mason.nvim",
-    lazy = false,
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-  },
 }
